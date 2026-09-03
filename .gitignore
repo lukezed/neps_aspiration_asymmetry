@@ -1,0 +1,22 @@
+.DS_Store
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.quarto/
+*_cache/
+*_files/
+*.html
+*.pdf
+*.docx
+*.tex
+*.log
+*.tmp
+
+# Data, fits and figures are not redistributable or are derived.
+data/*
+!data/.gitkeep
+models/*
+!models/.gitkeep
+figure/*
+!figure/.gitkeep
