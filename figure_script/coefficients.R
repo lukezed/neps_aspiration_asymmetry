@@ -131,12 +131,12 @@ change_rows <- function(k) {
            dir = "Improved", x = t),
     # times minus one: the movement, not the coefficient
     tibble(v = -(d[[sprintf("beta_a[%d]", t)]] + d[["b_neg[1]"]]),
-           dir = "Slipped", x = t)))) |>
+           dir = "Declined", x = t)))) |>
     mutate(cell = factor(CELLNAME[[k]], levels = PANEL_ORDER))
 }
 
 chg <- bind_rows(lapply(names(CELLS), change_rows)) |>
-  mutate(dir = factor(dir, levels = c("Improved", "Slipped"))) |>
+  mutate(dir = factor(dir, levels = c("Improved", "Declined"))) |>
   group_by(cell, dir, x) |>
   summarise(qs(v), .groups = "drop") |>
   mutate(xp = x + if_else(dir == "Improved", -0.07, 0.07))
@@ -148,11 +148,11 @@ fig3 <- ggplot(chg, aes(xp, m, colour = dir, fill = dir)) +
   geom_line(linewidth = LW) +
   geom_errorbar(aes(ymin = lo, ymax = hi), width = CAP, linewidth = EBW) +
   geom_point(size = PT) +
-  scale_colour_manual(values = c(Improved = RED, Slipped = BLUE)) +
-  scale_fill_manual(values = c(Improved = RED, Slipped = BLUE)) +
+  scale_colour_manual(values = c(Improved = RED, Declined = BLUE)) +
+  scale_fill_manual(values = c(Improved = RED, Declined = BLUE)) +
   scale_x_continuous(breaks = WAVE, labels = XLAB) +
   facet_wrap(vars(cell), nrow = 2) +
-  labs(x = NULL, y = "Standardised aspiration movement") +
+  labs(x = NULL, y = "Standardised aspiration response") +
   theme_paper() +
   theme(legend.position = "right",
         legend.direction = "vertical",
